@@ -1,0 +1,68 @@
+[
+  {
+    "project": "AccessAudit.AuditEngine.Application",
+    "references": [
+      "..\\AccessAudit.AuditEngine.Domain\\AccessAudit.AuditEngine.Domain.csproj"
+    ],
+    "packages": []
+  },
+  {
+    "project": "AccessAudit.AuditEngine.Domain",
+    "references": [],
+    "packages": []
+  },
+  {
+    "project": "AccessAudit.AuditEngine.Presentation",
+    "references": [
+      "..\\AccessAudit.AuditEngine.Application\\AccessAudit.AuditEngine.Application.csproj",
+      "..\\AccessAudit.AuditEngine.Domain\\AccessAudit.AuditEngine.Domain.csproj"
+    ],
+    "packages": [
+      "Microsoft.AspNetCore.OpenApi"
+    ]
+  },
+  {
+    "project": "AccessAudit.ComplianceAndAI.Application",
+    "references": [
+      "..\\AccessAudit.ComplianceAndAI.Domain\\AccessAudit.ComplianceAndAI.Domain.csproj"
+    ],
+    "packages": []
+  },
+  {
+    "project": "AccessAudit.ComplianceAndAI.Domain",
+    "references": [],
+    "packages": []
+  },
+  {
+    "project": "AccessAudit.ComplianceAndAI.Presentation",
+    "references": [
+      "..\\AccessAudit.ComplianceAndAI.Application\\AccessAudit.ComplianceAndAI.Application.csproj",
+      "..\\AccessAudit.ComplianceAndAI.Domain\\AccessAudit.ComplianceAndAI.Domain.csproj"
+    ],
+    "packages": [
+      "Microsoft.AspNetCore.OpenApi"
+    ]
+  },
+  {
+    "project": "AccessAudit.ProjectManagement.Application",
+    "references": [
+      "..\\AccessAudit.ProjectManagement.Domain\\AccessAudit.ProjectManagement.Domain.csproj"
+    ],
+    "packages": []
+  },
+  {
+    "project": "AccessAudit.ProjectManagement.Domain",
+    "references": [],
+    "packages": []
+  },
+  {
+    "project": "AccessAudit.ProjectManagement.Presentation",
+    "references": [
+      "..\\AccessAudit.ProjectManagement.Application\\AccessAudit.ProjectManagement.Application.csproj",
+      "..\\AccessAudit.ProjectManagement.Domain\\AccessAudit.ProjectManagement.Domain.csproj"
+    ],
+    "packages": [
+      "Microsoft.AspNetCore.OpenApi"
+    ]
+  }
+]

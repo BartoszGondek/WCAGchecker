@@ -1,0 +1,28 @@
+[
+  {
+    "Name": "Project Management",
+    "Projects": [
+      {
+        "Path": "src\\Services\\ProjectManagement\\AccessAudit.ProjectManagement.Presentation\\AccessAudit.ProjectManagement.Presentation.csproj",
+        "Action": "Start"
+      }
+    ]
+  },
+  {
+    "Name": "All three services",
+    "Projects": [
+      {
+        "Path": "src\\Services\\ProjectManagement\\AccessAudit.ProjectManagement.Presentation\\AccessAudit.ProjectManagement.Presentation.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "src\\Services\\AuditEngine\\AccessAudit.AuditEngine.Presentation\\AccessAudit.AuditEngine.Presentation.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "src\\Services\\ComplianceAndAI\\AccessAudit.ComplianceAndAI.Presentation\\AccessAudit.ComplianceAndAI.Presentation.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

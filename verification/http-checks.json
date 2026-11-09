@@ -1,0 +1,837 @@
+[
+  {
+    "method": "GET",
+    "path": "/",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "service": "AccessAudit.ProjectManagement",
+      "status": "Running",
+      "scope": "Lab 3: project registration, audit parameters and imported screen captures",
+      "openApi": "/openapi/v1.json"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/openapi/v1.json",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "openapi": "3.1.1",
+      "info": {
+        "title": "AccessAudit.ProjectManagement.Presentation | v1",
+        "version": "1.0.0"
+      },
+      "servers": [
+        {
+          "url": "http://127.0.0.1:63897/"
+        }
+      ],
+      "paths": {
+        "/": {
+          "get": {
+            "tags": [
+              "AccessAudit.ProjectManagement.Presentation"
+            ],
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+        },
+        "/api/projects": {
+          "post": {
+            "tags": [
+              "Projects"
+            ],
+            "requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegisterWebsiteRequest"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegisterWebsiteRequest"
+                  }
+                },
+                "application/*+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegisterWebsiteRequest"
+                  }
+                }
+              },
+              "required": true
+            },
+            "responses": {
+              "200": {
+                "description": "OK",
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  },
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  },
+                  "text/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "/api/projects/{projectId}": {
+          "get": {
+            "tags": [
+              "Projects"
+            ],
+            "parameters": [
+              {
+                "name": "projectId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  },
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  },
+                  "text/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "/api/projects/{projectId}/audit-parameters": {
+          "put": {
+            "tags": [
+              "Projects"
+            ],
+            "parameters": [
+              {
+                "name": "projectId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            ],
+            "requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SelectAuditParametersRequest"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SelectAuditParametersRequest"
+                  }
+                },
+                "application/*+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SelectAuditParametersRequest"
+                  }
+                }
+              },
+              "required": true
+            },
+            "responses": {
+              "200": {
+                "description": "OK",
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  },
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  },
+                  "text/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ProjectDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "/api/projects/{projectId}/captures": {
+          "post": {
+            "tags": [
+              "Projects"
+            ],
+            "parameters": [
+              {
+                "name": "projectId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            ],
+            "requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RecordScreenCaptureRequest"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RecordScreenCaptureRequest"
+                  }
+                },
+                "application/*+json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RecordScreenCaptureRequest"
+                  }
+                }
+              },
+              "required": true
+            },
+            "responses": {
+              "200": {
+                "description": "OK",
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "$ref": "#/components/schemas/AuditScreenDto"
+                    }
+                  },
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/AuditScreenDto"
+                    }
+                  },
+                  "text/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/AuditScreenDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "/api/projects/{projectId}/captures/{screenId}": {
+          "get": {
+            "tags": [
+              "Projects"
+            ],
+            "parameters": [
+              {
+                "name": "projectId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              {
+                "name": "screenId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "$ref": "#/components/schemas/AuditScreenDto"
+                    }
+                  },
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/AuditScreenDto"
+                    }
+                  },
+                  "text/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/AuditScreenDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "/api/projects/{projectId}/dashboard": {
+          "get": {
+            "tags": [
+              "Projects"
+            ],
+            "parameters": [
+              {
+                "name": "projectId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "$ref": "#/components/schemas/InteractiveIssueDashboardDto"
+                    }
+                  },
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/InteractiveIssueDashboardDto"
+                    }
+                  },
+                  "text/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/InteractiveIssueDashboardDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "components": {
+        "schemas": {
+          "AuditScreenDto": {
+            "required": [
+              "id",
+              "projectId",
+              "domLength",
+              "screenshotReferences",
+              "capturedAt"
+            ],
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "projectId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "domLength": {
+                "pattern": "^-?(?:0|[1-9]\\d*)$",
+                "type": [
+                  "integer",
+                  "string"
+                ],
+                "format": "int32"
+              },
+              "screenshotReferences": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "capturedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "InteractiveIssueDashboardDto": {
+            "required": [
+              "project",
+              "screens"
+            ],
+            "type": "object",
+            "properties": {
+              "project": {
+                "$ref": "#/components/schemas/ProjectDto"
+              },
+              "screens": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AuditScreenDto"
+                }
+              }
+            }
+          },
+          "ProjectDto": {
+            "required": [
+              "id",
+              "websiteUrl",
+              "wcagVersion",
+              "createdAt"
+            ],
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "websiteUrl": {
+                "type": "string"
+              },
+              "wcagVersion": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "RecordScreenCaptureRequest": {
+            "required": [
+              "dom",
+              "screenshotReferences"
+            ],
+            "type": "object",
+            "properties": {
+              "dom": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "screenshotReferences": {
+                "type": [
+                  "null",
+                  "array"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "RegisterWebsiteRequest": {
+            "required": [
+              "websiteUrl"
+            ],
+            "type": "object",
+            "properties": {
+              "websiteUrl": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              }
+            }
+          },
+          "SelectAuditParametersRequest": {
+            "required": [
+              "wcagVersion"
+            ],
+            "type": "object",
+            "properties": {
+              "wcagVersion": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "tags": [
+        {
+          "name": "AccessAudit.ProjectManagement.Presentation"
+        },
+        {
+          "name": "Projects"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "expectedStatus": 201,
+    "actualStatus": 201,
+    "passed": true,
+    "response": {
+      "id": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+      "websiteUrl": "https://example.com",
+      "wcagVersion": null,
+      "createdAt": "2026-11-07T20:39:51.509073+00:00"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "id": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+      "websiteUrl": "https://example.com",
+      "wcagVersion": null,
+      "createdAt": "2026-11-07T20:39:51.509073+00:00"
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/audit-parameters",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "id": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+      "websiteUrl": "https://example.com",
+      "wcagVersion": "2.1",
+      "createdAt": "2026-11-07T20:39:51.509073+00:00"
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/audit-parameters",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "id": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+      "websiteUrl": "https://example.com",
+      "wcagVersion": "2.2",
+      "createdAt": "2026-11-07T20:39:51.509073+00:00"
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/audit-parameters",
+    "expectedStatus": 422,
+    "actualStatus": 422,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 422,
+      "detail": "Supported WCAG versions are 2.1 and 2.2.",
+      "instance": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/audit-parameters",
+      "code": "audit.unsupported_wcag_version",
+      "attemptedVersion": "3.0"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "id": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+      "websiteUrl": "https://example.com",
+      "wcagVersion": "2.2",
+      "createdAt": "2026-11-07T20:39:51.509073+00:00"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/captures",
+    "expectedStatus": 201,
+    "actualStatus": 201,
+    "passed": true,
+    "response": {
+      "id": "9cf56a07-082f-43d5-a153-4a49fa6509a7",
+      "projectId": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+      "domLength": 23,
+      "screenshotReferences": [
+        "home.png"
+      ],
+      "capturedAt": "2026-11-07T20:39:51.5903515+00:00"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/captures/9cf56a07-082f-43d5-a153-4a49fa6509a7",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "id": "9cf56a07-082f-43d5-a153-4a49fa6509a7",
+      "projectId": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+      "domLength": 23,
+      "screenshotReferences": [
+        "home.png"
+      ],
+      "capturedAt": "2026-11-07T20:39:51.5903515+00:00"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/captures",
+    "expectedStatus": 422,
+    "actualStatus": 422,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 422,
+      "detail": "A screen capture must contain a non-empty DOM.",
+      "instance": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/captures",
+      "code": "audit.empty_dom",
+      "projectId": "c94b54a4-1209-4e1d-9408-533a251ca7d5"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/dashboard",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "project": {
+        "id": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+        "websiteUrl": "https://example.com",
+        "wcagVersion": "2.2",
+        "createdAt": "2026-11-07T20:39:51.509073+00:00"
+      },
+      "screens": [
+        {
+          "id": "9cf56a07-082f-43d5-a153-4a49fa6509a7",
+          "projectId": "c94b54a4-1209-4e1d-9408-533a251ca7d5",
+          "domLength": 23,
+          "screenshotReferences": [
+            "home.png"
+          ],
+          "capturedAt": "2026-11-07T20:39:51.5903515+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "expectedStatus": 400,
+    "actualStatus": 400,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 400,
+      "detail": "Website URL must be an absolute HTTP or HTTPS address with a host.",
+      "instance": "/api/projects",
+      "code": "project.invalid_website_url",
+      "attemptedUrl": "bad"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "expectedStatus": 400,
+    "actualStatus": 400,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 400,
+      "detail": "Website URL must be an absolute HTTP or HTTPS address with a host.",
+      "instance": "/api/projects",
+      "code": "project.invalid_website_url",
+      "attemptedUrl": "ftp://example.com"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "expectedStatus": 400,
+    "actualStatus": 400,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 400,
+      "detail": "Website URL must be an absolute HTTP or HTTPS address with a host.",
+      "instance": "/api/projects",
+      "code": "project.invalid_website_url",
+      "attemptedUrl": ""
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "expectedStatus": 400,
+    "actualStatus": 400,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 400,
+      "detail": "Website URL must be an absolute HTTP or HTTPS address with a host.",
+      "instance": "/api/projects",
+      "code": "project.invalid_website_url",
+      "attemptedUrl": null
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "expectedStatus": 400,
+    "actualStatus": 400,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 400,
+      "detail": "Website URL must be an absolute HTTP or HTTPS address with a host.",
+      "instance": "/api/projects",
+      "code": "project.invalid_website_url",
+      "attemptedUrl": null
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/audit-parameters",
+    "expectedStatus": 422,
+    "actualStatus": 422,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 422,
+      "detail": "Supported WCAG versions are 2.1 and 2.2.",
+      "instance": "/api/projects/c94b54a4-1209-4e1d-9408-533a251ca7d5/audit-parameters",
+      "code": "audit.unsupported_wcag_version",
+      "attemptedVersion": null
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/00000000-0000-0000-0000-000000000001",
+    "expectedStatus": 404,
+    "actualStatus": 404,
+    "passed": true,
+    "response": {
+      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+      "title": "Not Found",
+      "status": 404,
+      "traceId": "00-49ebdeebfc0a3131b5482898f128e1a8-05b143b6c347eea0-00"
+    }
+  },
+  {
+    "method": "PUT",
+    "path": "/api/projects/00000000-0000-0000-0000-000000000001/audit-parameters",
+    "expectedStatus": 404,
+    "actualStatus": 404,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 404,
+      "detail": "Project '00000000-0000-0000-0000-000000000001' was not found.",
+      "instance": "/api/projects/00000000-0000-0000-0000-000000000001/audit-parameters",
+      "code": "project.not_found",
+      "projectId": "00000000-0000-0000-0000-000000000001"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/00000000-0000-0000-0000-000000000001/captures",
+    "expectedStatus": 404,
+    "actualStatus": 404,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 404,
+      "detail": "Project '00000000-0000-0000-0000-000000000001' was not found.",
+      "instance": "/api/projects/00000000-0000-0000-0000-000000000001/captures",
+      "code": "project.not_found",
+      "projectId": "00000000-0000-0000-0000-000000000001"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/00000000-0000-0000-0000-000000000001/dashboard",
+    "expectedStatus": 404,
+    "actualStatus": 404,
+    "passed": true,
+    "response": {
+      "title": "The requested operation could not be completed.",
+      "status": 404,
+      "detail": "Project '00000000-0000-0000-0000-000000000001' was not found.",
+      "instance": "/api/projects/00000000-0000-0000-0000-000000000001/dashboard",
+      "code": "project.not_found",
+      "projectId": "00000000-0000-0000-0000-000000000001"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "expectedStatus": 201,
+    "actualStatus": 201,
+    "passed": true,
+    "response": {
+      "id": "e82bfc15-dd97-4953-8bc4-0e43a7a17f5a",
+      "websiteUrl": "https://other.example.com",
+      "wcagVersion": null,
+      "createdAt": "2026-11-07T20:39:51.656543+00:00"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/e82bfc15-dd97-4953-8bc4-0e43a7a17f5a/captures/9cf56a07-082f-43d5-a153-4a49fa6509a7",
+    "expectedStatus": 404,
+    "actualStatus": 404,
+    "passed": true,
+    "response": {
+      "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+      "title": "Not Found",
+      "status": 404,
+      "traceId": "00-e96b75011be86f104b6bd820f440463d-34e8784f1b80e90b-00"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/e82bfc15-dd97-4953-8bc4-0e43a7a17f5a/dashboard",
+    "expectedStatus": 200,
+    "actualStatus": 200,
+    "passed": true,
+    "response": {
+      "project": {
+        "id": "e82bfc15-dd97-4953-8bc4-0e43a7a17f5a",
+        "websiteUrl": "https://other.example.com",
+        "wcagVersion": null,
+        "createdAt": "2026-11-07T20:39:51.656543+00:00"
+      },
+      "screens": []
+    }
+  }
+]

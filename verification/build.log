@@ -1,0 +1,17 @@
+  AccessAudit.ProjectManagement.Domain -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ProjectManagement\AccessAudit.ProjectManagement.Domain\bin\Debug\net10.0\AccessAudit.ProjectManagement.Domain.dll
+  AccessAudit.AuditEngine.Domain -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\AuditEngine\AccessAudit.AuditEngine.Domain\bin\Debug\net10.0\AccessAudit.AuditEngine.Domain.dll
+  AccessAudit.ComplianceAndAI.Domain -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ComplianceAndAI\AccessAudit.ComplianceAndAI.Domain\bin\Debug\net10.0\AccessAudit.ComplianceAndAI.Domain.dll
+  AccessAudit.ProjectManagement.Application -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ProjectManagement\AccessAudit.ProjectManagement.Application\bin\Debug\net10.0\AccessAudit.ProjectManagement.Application.dll
+  AccessAudit.ProjectManagement.Domain.Tests -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\tests\ProjectManagement\AccessAudit.ProjectManagement.Domain.Tests\bin\Debug\net10.0\AccessAudit.ProjectManagement.Domain.Tests.dll
+  AccessAudit.AuditEngine.Application -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\AuditEngine\AccessAudit.AuditEngine.Application\bin\Debug\net10.0\AccessAudit.AuditEngine.Application.dll
+  AccessAudit.ComplianceAndAI.Application -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ComplianceAndAI\AccessAudit.ComplianceAndAI.Application\bin\Debug\net10.0\AccessAudit.ComplianceAndAI.Application.dll
+  AccessAudit.ProjectManagement.Presentation -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ProjectManagement\AccessAudit.ProjectManagement.Presentation\bin\Debug\net10.0\AccessAudit.ProjectManagement.Presentation.dll
+  AccessAudit.ProjectManagement.Application.Tests -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\tests\ProjectManagement\AccessAudit.ProjectManagement.Application.Tests\bin\Debug\net10.0\AccessAudit.ProjectManagement.Application.Tests.dll
+  AccessAudit.AuditEngine.Presentation -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\AuditEngine\AccessAudit.AuditEngine.Presentation\bin\Debug\net10.0\AccessAudit.AuditEngine.Presentation.dll
+  AccessAudit.ComplianceAndAI.Presentation -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ComplianceAndAI\AccessAudit.ComplianceAndAI.Presentation\bin\Debug\net10.0\AccessAudit.ComplianceAndAI.Presentation.dll
+
+Kompilacja powiodła się.
+    Ostrzeżenia: 0
+    Liczba błędów: 0
+
+Czas, który upłynął: 00:00:12.98

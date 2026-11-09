@@ -1,0 +1,63 @@
+@host = http://localhost:5240
+
+### 1. Register a website: expected 201. Copy id to projectId below.
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "websiteUrl": "https://example.com"
+}
+
+### Paste the id from the response here.
+@projectId = 00000000-0000-0000-0000-000000000000
+
+### 2. Read the project: expected 200 after replacing projectId.
+GET {{host}}/api/projects/{{projectId}}
+
+### 3. Select the audit parameters: expected 200.
+PUT {{host}}/api/projects/{{projectId}}/audit-parameters
+Content-Type: application/json
+
+{
+  "wcagVersion": "2.2"
+}
+
+### 4. Unsupported version: expected 422, attemptedVersion: 3.0.
+PUT {{host}}/api/projects/{{projectId}}/audit-parameters
+Content-Type: application/json
+
+{
+  "wcagVersion": "3.0"
+}
+
+### 5. Import a capture: expected 201. No website is downloaded by this endpoint.
+POST {{host}}/api/projects/{{projectId}}/captures
+Content-Type: application/json
+
+{
+  "dom": "<html lang=\"pl\"><body><h1>Test audytu</h1></body></html>",
+  "screenshotReferences": ["screenshots/home.png"]
+}
+
+### 6. Empty DOM: expected 422.
+POST {{host}}/api/projects/{{projectId}}/captures
+Content-Type: application/json
+
+{
+  "dom": "",
+  "screenshotReferences": []
+}
+
+### 7. Initial dashboard read model: expected 200.
+GET {{host}}/api/projects/{{projectId}}/dashboard
+
+### 8. Invalid website address: expected 400.
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "websiteUrl": "to nie jest adres strony"
+}
+
+### 9. Missing project: expected 404.
+GET {{host}}/api/projects/00000000-0000-0000-0000-000000000001

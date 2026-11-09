@@ -1,0 +1,27 @@
+  Trwa określanie projektów do przywrócenia...
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ProjectManagement\AccessAudit.ProjectManagement.Application\AccessAudit.ProjectManagement.Application.csproj (w 238 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ProjectManagement\AccessAudit.ProjectManagement.Domain\AccessAudit.ProjectManagement.Domain.csproj (w 201 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ComplianceAndAI\AccessAudit.ComplianceAndAI.Application\AccessAudit.ComplianceAndAI.Application.csproj (w 11 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ComplianceAndAI\AccessAudit.ComplianceAndAI.Presentation\AccessAudit.ComplianceAndAI.Presentation.csproj (w 786 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ProjectManagement\AccessAudit.ProjectManagement.Presentation\AccessAudit.ProjectManagement.Presentation.csproj (w 862 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\tests\ProjectManagement\AccessAudit.ProjectManagement.Domain.Tests\AccessAudit.ProjectManagement.Domain.Tests.csproj (w 896 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\AuditEngine\AccessAudit.AuditEngine.Application\AccessAudit.AuditEngine.Application.csproj (w 5 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\AuditEngine\AccessAudit.AuditEngine.Presentation\AccessAudit.AuditEngine.Presentation.csproj (w 298 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\AuditEngine\AccessAudit.AuditEngine.Domain\AccessAudit.AuditEngine.Domain.csproj (w 373 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ComplianceAndAI\AccessAudit.ComplianceAndAI.Domain\AccessAudit.ComplianceAndAI.Domain.csproj (w 609 ms).
+  Przywrócono element C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\tests\ProjectManagement\AccessAudit.ProjectManagement.Application.Tests\AccessAudit.ProjectManagement.Application.Tests.csproj (w 4,2 s).
+  AccessAudit.ProjectManagement.Domain -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ProjectManagement\AccessAudit.ProjectManagement.Domain\bin\Debug\net10.0\AccessAudit.ProjectManagement.Domain.dll
+  AccessAudit.ProjectManagement.Domain.Tests -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\tests\ProjectManagement\AccessAudit.ProjectManagement.Domain.Tests\bin\Debug\net10.0\AccessAudit.ProjectManagement.Domain.Tests.dll
+Przebieg testu dla: C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\tests\ProjectManagement\AccessAudit.ProjectManagement.Domain.Tests\bin\Debug\net10.0\AccessAudit.ProjectManagement.Domain.Tests.dll (.NETCoreApp,Version=v10.0)
+Łączna liczba plików testowych dopasowanych do określonego wzorca: 1.
+Plik wynikowy: C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\verification\TestResults\tests.trx
+
+Powodzenie!    — niepowodzenie:     0, powodzenie:    13, pominięto:     0, łącznie:    13, czas trwania: 405 ms - AccessAudit.ProjectManagement.Domain.Tests.dll (net10.0)
+  AccessAudit.ProjectManagement.Application -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\src\Services\ProjectManagement\AccessAudit.ProjectManagement.Application\bin\Debug\net10.0\AccessAudit.ProjectManagement.Application.dll
+  AccessAudit.ProjectManagement.Application.Tests -> C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\tests\ProjectManagement\AccessAudit.ProjectManagement.Application.Tests\bin\Debug\net10.0\AccessAudit.ProjectManagement.Application.Tests.dll
+Przebieg testu dla: C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\tests\ProjectManagement\AccessAudit.ProjectManagement.Application.Tests\bin\Debug\net10.0\AccessAudit.ProjectManagement.Application.Tests.dll (.NETCoreApp,Version=v10.0)
+Łączna liczba plików testowych dopasowanych do określonego wzorca: 1.
+OSTRZEŻENIE: Plik wynikowy jest zastępowany: C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\verification\TestResults\tests.trx
+Plik wynikowy: C:\Users\janek\Documents\Codex\2026-11-07\in-x20\outputs\AccessAudit\verification\TestResults\tests.trx
+
+Powodzenie!    — niepowodzenie:     0, powodzenie:    10, pominięto:     0, łącznie:    10, czas trwania: 602 ms - AccessAudit.ProjectManagement.Application.Tests.dll (net10.0)
