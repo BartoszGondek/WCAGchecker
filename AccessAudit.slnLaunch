@@ -16,11 +16,11 @@
         "Action": "Start"
       },
       {
-        "Path": "src\\Services\\AuditEngine\\AccessAudit.AuditEngine.Presentation\\AccessAudit.AuditEngine.Presentation.csproj",
+        "Path": "src\\Services\\AuditEngine\\AccessAudit.AuditEngine.Presentation\\AccessAudit.AccountAndBilling.Presentation.csproj",
         "Action": "Start"
       },
       {
-        "Path": "src\\Services\\ComplianceAndAI\\AccessAudit.ComplianceAndAI.Presentation\\AccessAudit.ComplianceAndAI.Presentation.csproj",
+        "Path": "src\\Services\\ComplianceAndAI\\AccessAudit.ComplianceAndAI.Presentation\\AccessAudit.AuditAndCompliance.Presentation.csproj",
         "Action": "Start"
       }
     ]

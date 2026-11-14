@@ -28,18 +28,18 @@ public sealed class ProjectsController(IProjectManagementService service) : Cont
         CancellationToken cancellationToken)
         => Ok(await service.SelectAuditParametersAsync(projectId, request.WcagVersion, cancellationToken));
 
-    [HttpPost("{projectId:guid}/captures")]
-    public async Task<ActionResult<AuditScreenDto>> RecordScreenCapture(Guid projectId, RecordScreenCaptureRequest request,
+    [HttpPost("{projectId:guid}/scopes")]
+    public async Task<ActionResult<AuditScopeDto>> ExtractDomAndCaptureScreenshots(Guid projectId, ExtractDomAndCaptureScreenshotsRequest request,
         CancellationToken cancellationToken)
     {
-        var dto = await service.RecordScreenCaptureAsync(projectId, request.Dom, request.ScreenshotReferences, cancellationToken);
-        return CreatedAtAction(nameof(GetScreen), new { projectId, screenId = dto.Id }, dto);
+        var dto = await service.ExtractDomAndCaptureScreenshotsAsync(projectId, request.Dom, request.ScreenshotReferences, cancellationToken);
+        return CreatedAtAction(nameof(GetScope), new { projectId, scopeId = dto.Id }, dto);
     }
 
-    [HttpGet("{projectId:guid}/captures/{screenId:guid}")]
-    public async Task<ActionResult<AuditScreenDto>> GetScreen(Guid projectId, Guid screenId, CancellationToken cancellationToken)
+    [HttpGet("{projectId:guid}/scopes/{scopeId:guid}")]
+    public async Task<ActionResult<AuditScopeDto>> GetScope(Guid projectId, Guid scopeId, CancellationToken cancellationToken)
     {
-        var dto = await service.GetScreenAsync(projectId, screenId, cancellationToken);
+        var dto = await service.GetScopeAsync(projectId, scopeId, cancellationToken);
         return dto is null ? NotFound() : Ok(dto);
     }
 

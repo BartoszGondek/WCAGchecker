@@ -2,7 +2,7 @@
   "version": 1,
   "dependencies": {
     "net10.0": {
-      "accessaudit.auditengine.domain": {
+      "accessaudit.accountandbilling.domain": {
         "type": "Project"
       }
     }

@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AccessAudit.AuditEngine.Application\AccessAudit.AuditEngine.Application.csproj" />
-    <ProjectReference Include="..\AccessAudit.AuditEngine.Domain\AccessAudit.AuditEngine.Domain.csproj" />
+    <ProjectReference Include="..\AccessAudit.AuditEngine.Application\AccessAudit.AccountAndBilling.Application.csproj" />
+    <ProjectReference Include="..\AccessAudit.AuditEngine.Domain\AccessAudit.AccountAndBilling.Domain.csproj" />
   </ItemGroup>
 
 </Project>

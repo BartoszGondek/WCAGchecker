@@ -16,13 +16,16 @@
         "resolved": "2.12.2",
         "contentHash": "ZkT7qiJe0Kj0+DTZOZo+xrDy1kNmdsWFQVPIQLNx9ZJ0T9cB2LG7r+Bi60so8/+yg1nkS7QCPadrzsTG4VPKrA=="
       },
-      "accessaudit.auditengine.application": {
+      "accessaudit.auditandcompliance.application": {
         "type": "Project",
         "dependencies": {
-          "AccessAudit.AuditEngine.Domain": "[1.0.0, )"
+          "AccessAudit.AuditAndCompliance.Domain": "[1.0.0, )"
         }
       },
-      "accessaudit.auditengine.domain": {
+      "accessaudit.auditandcompliance.domain": {
+        "type": "Project"
+      },
+      "accessaudit.complianceandai.domain": {
         "type": "Project"
       }
     }

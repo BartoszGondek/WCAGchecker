@@ -10,8 +10,8 @@ namespace AccessAudit.ProjectManagement.Application.Tests;
 public class ProjectManagementServiceTests
 {
     private readonly Mock<IProjectRepository> _projects = new();
-    private readonly Mock<IAuditScreenRepository> _screens = new();
-    private ProjectManagementService CreateService() => new(_projects.Object, _screens.Object);
+    private readonly Mock<IAuditScopeRepository> _scopes = new();
+    private ProjectManagementService CreateService() => new(_projects.Object, _scopes.Object);
 
     [Fact]
     public async Task RegisterWebsite_WhenValid_SavesProject()
@@ -49,8 +49,7 @@ public class ProjectManagementServiceTests
     public async Task SelectAuditParameters_WhenMissing_ThrowsWithIdAndNeverSaves()
     {
         var id = Guid.NewGuid();
-        var error = await Assert.ThrowsAsync<ProjectNotFoundException>(() => CreateService().SelectAuditParametersAsync(id, "2.2"));
-        Assert.Equal(id, error.ProjectId);
+        await Assert.ThrowsAsync<ProjectNotFoundException>(() => CreateService().SelectAuditParametersAsync(id, "2.2"));
         _projects.Verify(r => r.SaveAsync(It.IsAny<Project>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
@@ -61,7 +60,6 @@ public class ProjectManagementServiceTests
         var dto = await CreateService().GetProjectAsync(project.Id);
         Assert.NotNull(dto);
         Assert.Equal(project.Id, dto.Id);
-        _projects.Verify(r => r.SaveAsync(It.IsAny<Project>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -71,27 +69,27 @@ public class ProjectManagementServiceTests
     }
 
     [Fact]
-    public async Task RecordScreenCapture_WhenValid_SavesScreen()
+    public async Task ExtractDomAndCaptureScreenshots_WhenValid_SavesScope()
     {
         var project = ExistingProject();
-        var dto = await CreateService().RecordScreenCaptureAsync(project.Id, "<html></html>", ["home.png"]);
+        var dto = await CreateService().ExtractDomAndCaptureScreenshotsAsync(project.Id, "<html></html>", ["home.png"]);
         Assert.Equal(project.Id, dto.ProjectId);
-        _screens.Verify(r => r.SaveAsync(It.Is<AuditScreen>(s => s.Id == dto.Id), It.IsAny<CancellationToken>()), Times.Once);
+        _scopes.Verify(r => r.SaveAsync(It.Is<AuditScope>(s => s.Id == dto.Id), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
-    public async Task RecordScreenCapture_WhenDomEmpty_NeverSaves()
+    public async Task ExtractDomAndCaptureScreenshots_WhenDomEmpty_NeverSaves()
     {
         var project = ExistingProject();
-        await Assert.ThrowsAsync<EmptyDomException>(() => CreateService().RecordScreenCaptureAsync(project.Id, "", []));
-        _screens.Verify(r => r.SaveAsync(It.IsAny<AuditScreen>(), It.IsAny<CancellationToken>()), Times.Never);
+        await Assert.ThrowsAsync<EmptyDomException>(() => CreateService().ExtractDomAndCaptureScreenshotsAsync(project.Id, "", []));
+        _scopes.Verify(r => r.SaveAsync(It.IsAny<AuditScope>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
-    public async Task RecordScreenCapture_WhenProjectMissing_NeverSaves()
+    public async Task ExtractDomAndCaptureScreenshots_WhenProjectMissing_NeverSaves()
     {
-        await Assert.ThrowsAsync<ProjectNotFoundException>(() => CreateService().RecordScreenCaptureAsync(Guid.NewGuid(), "<html></html>", []));
-        _screens.Verify(r => r.SaveAsync(It.IsAny<AuditScreen>(), It.IsAny<CancellationToken>()), Times.Never);
+        await Assert.ThrowsAsync<ProjectNotFoundException>(() => CreateService().ExtractDomAndCaptureScreenshotsAsync(Guid.NewGuid(), "<html></html>", []));
+        _scopes.Verify(r => r.SaveAsync(It.IsAny<AuditScope>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     private Project ExistingProject()

@@ -16,13 +16,13 @@
         "resolved": "2.12.2",
         "contentHash": "ZkT7qiJe0Kj0+DTZOZo+xrDy1kNmdsWFQVPIQLNx9ZJ0T9cB2LG7r+Bi60so8/+yg1nkS7QCPadrzsTG4VPKrA=="
       },
-      "accessaudit.complianceandai.application": {
+      "accessaudit.accountandbilling.application": {
         "type": "Project",
         "dependencies": {
-          "AccessAudit.ComplianceAndAI.Domain": "[1.0.0, )"
+          "AccessAudit.AccountAndBilling.Domain": "[1.0.0, )"
         }
       },
-      "accessaudit.complianceandai.domain": {
+      "accessaudit.accountandbilling.domain": {
         "type": "Project"
       }
     }

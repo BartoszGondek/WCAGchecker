@@ -1,14 +1,21 @@
 using AccessAudit.ProjectManagement.Domain.Exceptions;
+using AccessAudit.ProjectManagement.Domain.Events;
 
 namespace AccessAudit.ProjectManagement.Domain.Aggregates;
 
-// Aggregate Root corresponding to the yellow "Project" sticky note.
+
 public sealed class Project
 {
+  
+    private readonly List<IDomainEvent> _domainEvents = new();
+
     public Guid Id { get; }
     public string WebsiteUrl { get; }
     public string? WcagVersion { get; private set; }
     public DateTimeOffset CreatedAt { get; }
+
+   
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     public Project(string? websiteUrl)
     {
@@ -21,6 +28,9 @@ public sealed class Project
         Id = Guid.NewGuid();
         WebsiteUrl = websiteUrl;
         CreatedAt = DateTimeOffset.UtcNow;
+
+        
+        _domainEvents.Add(new AddedAProject(Id, WebsiteUrl));
     }
 
     public void SelectAuditParameters(string? wcagVersion)
@@ -29,8 +39,14 @@ public sealed class Project
             throw new UnsupportedWcagVersionException(wcagVersion);
 
         WcagVersion = wcagVersion;
+
+        // 4. Emitowanie zdarzenia "SelectedAuditPerimeter"
+        _domainEvents.Add(new SelectedAuditPerimeter(Id, wcagVersion));
     }
 
-    // Repositories return snapshots so a rejected/unsaved operation cannot mutate storage.
+    
+    public void ClearDomainEvents() => _domainEvents.Clear();
+
+    
     public Project Snapshot() => (Project)MemberwiseClone();
 }

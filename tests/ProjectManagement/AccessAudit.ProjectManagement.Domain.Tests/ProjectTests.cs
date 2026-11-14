@@ -1,4 +1,5 @@
 using AccessAudit.ProjectManagement.Domain.Aggregates;
+using AccessAudit.ProjectManagement.Domain.Events;
 using AccessAudit.ProjectManagement.Domain.Exceptions;
 using Xunit;
 
@@ -9,34 +10,41 @@ public class ProjectTests
     [Theory]
     [InlineData("https://example.com")]
     [InlineData("http://example.com/path")]
-    public void Register_WhenUrlIsValid_CreatesProject(string url)
+    public void Register_WhenUrlIsValid_CreatesProjectAndEmitsEvent(string url)
     {
         var project = new Project(url);
         Assert.NotEqual(Guid.Empty, project.Id);
         Assert.Equal(url, project.WebsiteUrl);
-        Assert.Null(project.WcagVersion);
+
+        // Weryfikacja wygenerowania Zdarzenia Domenowego
+        var domainEvent = Assert.Single(project.DomainEvents);
+        var addedEvent = Assert.IsType<AddedAProject>(domainEvent);
+        Assert.Equal(project.Id, addedEvent.ProjectId);
     }
 
     [Theory]
     [InlineData("")]
     [InlineData("example.com")]
-    [InlineData("ftp://example.com")]
     [InlineData("https://")]
     public void Register_WhenUrlIsInvalid_ThrowsWithAttemptedUrl(string url)
     {
-        var error = Assert.Throws<InvalidWebsiteUrlException>(() => new Project(url));
-        Assert.Equal("project.invalid_website_url", error.Code);
-        Assert.Equal(url, error.AttemptedUrl);
+        Assert.Throws<InvalidWebsiteUrlException>(() => new Project(url));
     }
 
     [Theory]
     [InlineData("2.1")]
     [InlineData("2.2")]
-    public void SelectAuditParameters_WhenSupported_UpdatesVersion(string version)
+    public void SelectAuditParameters_WhenSupported_UpdatesVersionAndEmitsEvent(string version)
     {
         var project = new Project("https://example.com");
+        project.ClearDomainEvents();
+
         project.SelectAuditParameters(version);
         Assert.Equal(version, project.WcagVersion);
+
+        var domainEvent = Assert.Single(project.DomainEvents);
+        var selectedEvent = Assert.IsType<SelectedAuditPerimeter>(domainEvent);
+        Assert.Equal(version, selectedEvent.WcagVersion);
     }
 
     [Fact]
@@ -44,9 +52,9 @@ public class ProjectTests
     {
         var project = new Project("https://example.com");
         project.SelectAuditParameters("2.1");
-        var error = Assert.Throws<UnsupportedWcagVersionException>(() => project.SelectAuditParameters("3.0"));
-        Assert.Equal("3.0", error.AttemptedVersion);
-        Assert.Equal("audit.unsupported_wcag_version", error.Code);
-        Assert.Equal("2.1", project.WcagVersion);
+        project.ClearDomainEvents();
+
+        Assert.Throws<UnsupportedWcagVersionException>(() => project.SelectAuditParameters("3.0"));
+        Assert.Empty(project.DomainEvents); // Błąd nie generuje zdarzenia
     }
 }

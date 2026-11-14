@@ -5,7 +5,7 @@ using AccessAudit.ProjectManagement.Domain.Exceptions;
 
 namespace AccessAudit.ProjectManagement.Application.Services;
 
-public sealed class ProjectManagementService(IProjectRepository projects, IAuditScreenRepository screens)
+public sealed class ProjectManagementService(IProjectRepository projects, IAuditScopeRepository scopes)
     : IProjectManagementService
 {
     public async Task<ProjectDto> RegisterWebsiteAsync(string? websiteUrl, CancellationToken cancellationToken = default)
@@ -30,28 +30,27 @@ public sealed class ProjectManagementService(IProjectRepository projects, IAudit
         return ToDto(project);
     }
 
-    // Receives outputs of a capture tool. It does not claim to browse or audit websites.
-    public async Task<AuditScreenDto> RecordScreenCaptureAsync(Guid projectId, string? dom,
+    public async Task<AuditScopeDto> ExtractDomAndCaptureScreenshotsAsync(Guid projectId, string? dom,
         IReadOnlyCollection<string>? screenshotReferences, CancellationToken cancellationToken = default)
     {
         await RequireProjectAsync(projectId, cancellationToken);
-        var screen = new AuditScreen(projectId, dom, screenshotReferences);
-        await screens.SaveAsync(screen, cancellationToken);
-        return ToDto(screen);
+        var scope = new AuditScope(projectId, dom, screenshotReferences);
+        await scopes.SaveAsync(scope, cancellationToken);
+        return ToDto(scope);
     }
 
-    public async Task<AuditScreenDto?> GetScreenAsync(Guid projectId, Guid screenId,
+    public async Task<AuditScopeDto?> GetScopeAsync(Guid projectId, Guid scopeId,
         CancellationToken cancellationToken = default)
     {
-        var screen = await screens.GetByIdAsync(screenId, cancellationToken);
-        return screen is null || screen.ProjectId != projectId ? null : ToDto(screen);
+        var scope = await scopes.GetByIdAsync(scopeId, cancellationToken);
+        return scope is null || scope.ProjectId != projectId ? null : ToDto(scope);
     }
 
     public async Task<InteractiveIssueDashboardDto> GetDashboardAsync(Guid projectId,
         CancellationToken cancellationToken = default)
     {
         var project = await RequireProjectAsync(projectId, cancellationToken);
-        var captures = await screens.GetByProjectIdAsync(projectId, cancellationToken);
+        var captures = await scopes.GetByProjectIdAsync(projectId, cancellationToken);
         return new(ToDto(project), Array.AsReadOnly(captures.Select(ToDto).ToArray()));
     }
 
@@ -61,6 +60,6 @@ public sealed class ProjectManagementService(IProjectRepository projects, IAudit
     private static ProjectDto ToDto(Project project)
         => new(project.Id, project.WebsiteUrl, project.WcagVersion, project.CreatedAt);
 
-    private static AuditScreenDto ToDto(AuditScreen screen)
-        => new(screen.Id, screen.ProjectId, screen.Dom.Length, screen.ScreenshotReferences, screen.CapturedAt);
+    private static AuditScopeDto ToDto(AuditScope scope)
+        => new(scope.Id, scope.ProjectId, scope.Dom.Length, scope.ScreenshotReferences, scope.CapturedAt);
 }
