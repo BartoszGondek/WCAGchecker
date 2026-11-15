@@ -1,5 +1,7 @@
 # Tactical Design: Lifecycles, Invariants & TDD
+
 ## I. Aggregate Lifecycle Diagram (Project Audit)
+
 ```mermaid
 stateDiagram-v2
     direction LR
@@ -22,7 +24,7 @@ stateDiagram-v2
     
     AuditCompleted --> [*]
     AuditFailed --> [*]
-
+```
 
 ## II. Catalog of Core Business Invariants
 
@@ -72,4 +74,4 @@ public interface IWcagScoringPolicy
     bool IsApplicable(WcagVersion version);
     AuditScore CalculateScore(ParsedDom elements);
 }
- 
+```
