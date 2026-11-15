@@ -2,29 +2,7 @@
 
 ## I. Aggregate Lifecycle Diagram (Project Audit)
 
-```mermaid
-stateDiagram-v2
-    direction LR
-    
-    [*] --> Registered : RegisterWebsite()
-    Registered --> DomExtracted : ExtractDom()
-    
-    note right of Registered
-        FORBIDDEN: CompleteAudit() is blocked 
-        until the DOM is fully extracted.
-    end note
-
-    DomExtracted --> AuditCompleted : CompleteAudit()
-    DomExtracted --> AuditFailed : FailAudit()
-    
-    note right of AuditCompleted
-        FORBIDDEN: ExtractDom() cannot be executed 
-        after the audit reaches a terminal state.
-    end note
-    
-    AuditCompleted --> [*]
-    AuditFailed --> [*]
-```
+![StateDiagram - Project Audit](stateDiagram-ProjectAudit.png)
 
 ## II. Catalog of Core Business Invariants
 
