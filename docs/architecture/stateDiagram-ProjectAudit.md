@@ -24,6 +24,7 @@ stateDiagram-v2
     
     AuditCompleted --> [*]
     AuditFailed --> [*]
+```
 
 ## II. Catalog of Core Business Invariants
 
