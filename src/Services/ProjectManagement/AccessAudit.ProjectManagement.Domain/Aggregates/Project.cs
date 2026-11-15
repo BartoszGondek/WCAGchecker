@@ -1,52 +1,68 @@
-using AccessAudit.ProjectManagement.Domain.Exceptions;
 using AccessAudit.ProjectManagement.Domain.Events;
+using AccessAudit.ProjectManagement.Domain.Exceptions;
+using AccessAudit.ProjectManagement.Domain.States;
+using AccessAudit.ProjectManagement.Domain.ValueObjects;
+using WebsiteAddress = AccessAudit.ProjectManagement.Domain.ValueObjects.WebsiteUrl;
+using AuditVersion = AccessAudit.ProjectManagement.Domain.ValueObjects.WcagVersion;
 
 namespace AccessAudit.ProjectManagement.Domain.Aggregates;
 
-
 public sealed class Project
 {
-  
-    private readonly List<IDomainEvent> _domainEvents = new();
+    private List<IDomainEvent> _domainEvents = [];
 
-    public Guid Id { get; }
-    public string WebsiteUrl { get; }
-    public string? WcagVersion { get; private set; }
-    public DateTimeOffset CreatedAt { get; }
+    public ProjectId Identity { get; private set; }
+    public WebsiteAddress Url { get; private set; } = null!;
+    public AuditVersion? Version { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
+    public ProjectAuditState State { get; private set; } = ProjectAuditState.Registered;
 
-   
+    // Compatibility projections retain Lab 3's public API and DTO types.
+    public Guid Id => Identity.Value;
+    public string WebsiteUrl => Url.Value;
+    public string? WcagVersion => Version?.Version;
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
+    // Restore persisted state without raising new creation events.
+    private Project() { }
 
     public Project(string? websiteUrl)
     {
-        if (string.IsNullOrWhiteSpace(websiteUrl)
-            || !Uri.TryCreate(websiteUrl, UriKind.Absolute, out var uri)
-            || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
-            || string.IsNullOrWhiteSpace(uri.Host))
-            throw new InvalidWebsiteUrlException(websiteUrl);
-
-        Id = Guid.NewGuid();
-        WebsiteUrl = websiteUrl;
+        Url = new WebsiteAddress(websiteUrl);
+        Identity = new ProjectId(Guid.NewGuid());
         CreatedAt = DateTimeOffset.UtcNow;
-
-        
         _domainEvents.Add(new AddedAProject(Id, WebsiteUrl));
     }
 
     public void SelectAuditParameters(string? wcagVersion)
     {
-        if (wcagVersion is not ("2.1" or "2.2"))
-            throw new UnsupportedWcagVersionException(wcagVersion);
-
-        WcagVersion = wcagVersion;
-
-        // 4. Emitowanie zdarzenia "SelectedAuditPerimeter"
-        _domainEvents.Add(new SelectedAuditPerimeter(Id, wcagVersion));
+        Version = new AuditVersion(wcagVersion);
+        _domainEvents.Add(new SelectedAuditPerimeter(Id, Version.Version));
     }
 
-    
+    public void ExtractDom()
+    {
+        if (State is not (ProjectAuditState.Registered or ProjectAuditState.DomExtracted))
+            throw new InvalidProjectAuditTransitionException(Id, State, ProjectAuditState.DomExtracted);
+        State = ProjectAuditState.DomExtracted;
+    }
+
+    public void CompleteAudit() => TransitionFromExtracted(ProjectAuditState.AuditCompleted);
+    public void FailAudit() => TransitionFromExtracted(ProjectAuditState.AuditFailed);
+
+    private void TransitionFromExtracted(ProjectAuditState next)
+    {
+        if (State != ProjectAuditState.DomExtracted)
+            throw new InvalidProjectAuditTransitionException(Id, State, next);
+        State = next;
+    }
+
     public void ClearDomainEvents() => _domainEvents.Clear();
 
-    
-    public Project Snapshot() => (Project)MemberwiseClone();
+    public Project Snapshot()
+    {
+        var copy = (Project)MemberwiseClone();
+        copy._domainEvents = new List<IDomainEvent>(_domainEvents);
+        return copy;
+    }
 }

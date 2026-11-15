@@ -6,6 +6,10 @@ public interface IProjectManagementService
 {
     Task<ProjectDto> RegisterWebsiteAsync(string? websiteUrl, CancellationToken cancellationToken = default);
     Task<ProjectDto?> GetProjectAsync(Guid projectId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<ProjectDto>> GetProjectsAsync(CancellationToken cancellationToken = default);
+    Task DeleteProjectAsync(Guid projectId, CancellationToken cancellationToken = default);
+    Task<ProjectDto> CompleteAuditAsync(Guid projectId, CancellationToken cancellationToken = default);
+    Task<ProjectDto> FailAuditAsync(Guid projectId, CancellationToken cancellationToken = default);
     Task<ProjectDto> SelectAuditParametersAsync(Guid projectId, string? wcagVersion, CancellationToken cancellationToken = default);
     Task<AuditScopeDto> ExtractDomAndCaptureScreenshotsAsync(Guid projectId, string? dom,
         IReadOnlyCollection<string>? screenshotReferences, CancellationToken cancellationToken = default);

@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### Paste the id from the response here.
-@projectId = 00000000-0000-0000-0000-000000000000
+@projectId = db731e50-44c5-40cd-b6a8-11862dc53c99
 
 ### 2. Read the project: expected 200 after replacing projectId.
 GET {{host}}/api/projects/{{projectId}}

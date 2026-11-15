@@ -9,6 +9,25 @@ namespace AccessAudit.ProjectManagement.Presentation.Controllers;
 [Route("api/projects")]
 public sealed class ProjectsController(IProjectManagementService service) : ControllerBase
 {
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyCollection<ProjectDto>>> GetProjects(CancellationToken cancellationToken)
+        => Ok(await service.GetProjectsAsync(cancellationToken));
+
+    [HttpDelete("{projectId:guid}")]
+    public async Task<IActionResult> DeleteProject(Guid projectId, CancellationToken cancellationToken)
+    {
+        await service.DeleteProjectAsync(projectId, cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPost("{projectId:guid}/complete")]
+    public async Task<ActionResult<ProjectDto>> CompleteAudit(Guid projectId, CancellationToken cancellationToken)
+        => Ok(await service.CompleteAuditAsync(projectId, cancellationToken));
+
+    [HttpPost("{projectId:guid}/fail")]
+    public async Task<ActionResult<ProjectDto>> FailAudit(Guid projectId, CancellationToken cancellationToken)
+        => Ok(await service.FailAuditAsync(projectId, cancellationToken));
+
     [HttpPost]
     public async Task<ActionResult<ProjectDto>> RegisterWebsite(RegisterWebsiteRequest request, CancellationToken cancellationToken)
     {
@@ -28,7 +47,7 @@ public sealed class ProjectsController(IProjectManagementService service) : Cont
         CancellationToken cancellationToken)
         => Ok(await service.SelectAuditParametersAsync(projectId, request.WcagVersion, cancellationToken));
 
-    [HttpPost("{projectId:guid}/scopes")]
+    [HttpPost("{projectId:guid}/captures")]
     public async Task<ActionResult<AuditScopeDto>> ExtractDomAndCaptureScreenshots(Guid projectId, ExtractDomAndCaptureScreenshotsRequest request,
         CancellationToken cancellationToken)
     {
