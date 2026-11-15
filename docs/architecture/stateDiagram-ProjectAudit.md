@@ -9,7 +9,7 @@ stateDiagram-v2
     [*] --> Registered : RegisterWebsite()
     Registered --> DomExtracted : ExtractDom()
     
-    note bottom of Registered
+    note right of Registered
         FORBIDDEN: CompleteAudit() is blocked 
         until the DOM is fully extracted.
     end note
@@ -17,14 +17,13 @@ stateDiagram-v2
     DomExtracted --> AuditCompleted : CompleteAudit()
     DomExtracted --> AuditFailed : FailAudit()
     
-    note top of AuditCompleted
+    note right of AuditCompleted
         FORBIDDEN: ExtractDom() cannot be executed 
         after the audit reaches a terminal state.
     end note
     
     AuditCompleted --> [*]
     AuditFailed --> [*]
-```
 
 ## II. Catalog of Core Business Invariants
 
