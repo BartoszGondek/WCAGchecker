@@ -1,6 +1,7 @@
 using AccessAudit.ProjectManagement.Application.Repositories;
 using AccessAudit.ProjectManagement.Application.Services;
 using AccessAudit.ProjectManagement.Domain.Aggregates;
+using AccessAudit.ProjectManagement.Domain.Entities;
 using AccessAudit.ProjectManagement.Domain.Exceptions;
 using Moq;
 
@@ -9,8 +10,9 @@ namespace AccessAudit.ProjectManagement.Application.Tests;
 public class ProjectLifecycleServiceTests
 {
     private readonly Mock<IProjectRepository> _projects = new();
-    private readonly Mock<IAuditScopeRepository> _scopes = new();
-    private ProjectManagementService Service => new(_projects.Object, _scopes.Object);
+
+    
+    private ProjectManagementService Service => new(_projects.Object);
 
     [Fact]
     public async Task GetProjects_ReturnsMaterializedReadModels()
@@ -61,8 +63,11 @@ public class ProjectLifecycleServiceTests
         var project = ExistingProject();
         project.ExtractDom();
         project.CompleteAudit();
-        await Assert.ThrowsAsync<InvalidProjectAuditTransitionException>(() => Service.ExtractDomAndCaptureScreenshotsAsync(project.Id, "<html/>", []));
-        _scopes.Verify(r => r.SaveAsync(It.IsAny<AuditScope>(), It.IsAny<CancellationToken>()), Times.Never);
+
+        await Assert.ThrowsAsync<InvalidProjectAuditTransitionException>(() =>
+            Service.ExtractDomAndCaptureScreenshotsAsync(project.Id, "<html/>", []));
+
+        _projects.Verify(r => r.SaveAsync(It.IsAny<Project>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     private Project ExistingProject()

@@ -1,4 +1,5 @@
 using AccessAudit.ProjectManagement.Domain.Aggregates;
+using AccessAudit.ProjectManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccessAudit.ProjectManagement.Infrastructure.Persistence;

@@ -1,4 +1,4 @@
-using AccessAudit.ProjectManagement.Domain.Aggregates;
+using AccessAudit.ProjectManagement.Domain.Entities;
 
 namespace AccessAudit.ProjectManagement.Application.Repositories;
 

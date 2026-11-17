@@ -1,6 +1,7 @@
 using AccessAudit.ProjectManagement.Application.Repositories;
 using AccessAudit.ProjectManagement.Application.Services;
 using AccessAudit.ProjectManagement.Domain.Aggregates;
+using AccessAudit.ProjectManagement.Domain.Entities;
 using AccessAudit.ProjectManagement.Domain.Exceptions;
 using Moq;
 using Xunit;
@@ -10,8 +11,8 @@ namespace AccessAudit.ProjectManagement.Application.Tests;
 public class ProjectManagementServiceTests
 {
     private readonly Mock<IProjectRepository> _projects = new();
-    private readonly Mock<IAuditScopeRepository> _scopes = new();
-    private ProjectManagementService CreateService() => new(_projects.Object, _scopes.Object);
+
+    private ProjectManagementService CreateService() => new(_projects.Object);
 
     [Fact]
     public async Task RegisterWebsite_WhenValid_SavesProject()
@@ -74,7 +75,7 @@ public class ProjectManagementServiceTests
         var project = ExistingProject();
         var dto = await CreateService().ExtractDomAndCaptureScreenshotsAsync(project.Id, "<html></html>", ["home.png"]);
         Assert.Equal(project.Id, dto.ProjectId);
-        _scopes.Verify(r => r.SaveAsync(It.Is<AuditScope>(s => s.Id == dto.Id), It.IsAny<CancellationToken>()), Times.Once);
+        _projects.Verify(r => r.SaveAsync(It.Is<Project>(p => p.Id == project.Id), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -82,14 +83,14 @@ public class ProjectManagementServiceTests
     {
         var project = ExistingProject();
         await Assert.ThrowsAsync<EmptyDomException>(() => CreateService().ExtractDomAndCaptureScreenshotsAsync(project.Id, "", []));
-        _scopes.Verify(r => r.SaveAsync(It.IsAny<AuditScope>(), It.IsAny<CancellationToken>()), Times.Never);
+        _projects.Verify(r => r.SaveAsync(It.IsAny<Project>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
     public async Task ExtractDomAndCaptureScreenshots_WhenProjectMissing_NeverSaves()
     {
         await Assert.ThrowsAsync<ProjectNotFoundException>(() => CreateService().ExtractDomAndCaptureScreenshotsAsync(Guid.NewGuid(), "<html></html>", []));
-        _scopes.Verify(r => r.SaveAsync(It.IsAny<AuditScope>(), It.IsAny<CancellationToken>()), Times.Never);
+        _projects.Verify(r => r.SaveAsync(It.IsAny<Project>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     private Project ExistingProject()

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using AccessAudit.ProjectManagement.Domain.Aggregates;
+using AccessAudit.ProjectManagement.Domain.Entities;
 using AccessAudit.ProjectManagement.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;

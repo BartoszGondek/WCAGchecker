@@ -1,5 +1,6 @@
 using AccessAudit.ProjectManagement.Domain.Aggregates;
 using AccessAudit.ProjectManagement.Domain.Events;
+using AccessAudit.ProjectManagement.Domain.Entities;
 using AccessAudit.ProjectManagement.Domain.Exceptions;
 using Xunit;
 

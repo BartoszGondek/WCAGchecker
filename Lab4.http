@@ -1,0 +1,83 @@
+@host = http://localhost:5240
+
+### 1. Immediate read after startup: expected 200 and two seeded projects.
+### Copy the id for ready.example.com and registered.example.com to the variables below.
+GET {{host}}/api/projects
+
+@readyProjectId = 00000000-0000-0000-0000-000000000000      
+@edgeProjectId = 00000000-0000-0000-0000-000000000000
+
+### 2. Read the seeded project and its imported scope: expected 200.
+GET {{host}}/api/projects/{{readyProjectId}}/dashboard
+
+### 3. Edge case: cannot complete Registered project before DOM extraction. Expected 422.
+POST {{host}}/api/projects/{{edgeProjectId}}/complete
+
+### 4. Create a resource: expected 201 and Location header. Copy response id below.
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "websiteUrl": "https://example.com"
+}
+
+@projectId = 00000000-0000-0000-0000-000000000000
+
+### 5. Business command: expected 200 and wcagVersion 2.2.
+PUT {{host}}/api/projects/{{projectId}}/audit-parameters
+Content-Type: application/json
+
+{
+  "wcagVersion": "2.2"
+}
+
+### 6. Rejected command: expected 422, version remains 2.2.
+PUT {{host}}/api/projects/{{projectId}}/audit-parameters
+Content-Type: application/json
+
+{
+  "wcagVersion": "3.0"
+}
+
+### 7. Import already captured DOM and image references: expected 201; state becomes DomExtracted.
+POST {{host}}/api/projects/{{projectId}}/scopes
+Content-Type: application/json
+
+{
+  "dom": "<html lang=\"pl\"><body><h1>Lab 4</h1></body></html>",
+  "screenshotReferences": ["demo/home.png", "demo/details.png"]
+}
+
+### 8. Reject empty DOM: expected 422, no extra scope saved.
+POST {{host}}/api/projects/{{projectId}}/scopes
+Content-Type: application/json
+
+{
+  "dom": " ",
+  "screenshotReferences": []
+}
+
+### 9. Finish the audit lifecycle: expected 200, state AuditCompleted.
+POST {{host}}/api/projects/{{projectId}}/complete
+
+### 10. Terminal state rejects another extraction: expected 422.
+POST {{host}}/api/projects/{{projectId}}/scopes
+Content-Type: application/json
+
+{
+  "dom": "<html></html>",
+  "screenshotReferences": []
+}
+
+### 11. Stop and restart API. With SQL this GET still returns 200 with state and screenshots.
+### With EF InMemory the manually created resource disappears (expected 404).
+GET {{host}}/api/projects/{{projectId}}/dashboard
+
+### 12. SQL restart must not duplicate the two seeded projects.
+GET {{host}}/api/projects
+
+### 13. Delete your newly created test resource: expected 204; its scopes are removed too.
+DELETE {{host}}/api/projects/{{projectId}}
+
+### 14. After deletion: expected 404.
+GET {{host}}/api/projects/{{projectId}}

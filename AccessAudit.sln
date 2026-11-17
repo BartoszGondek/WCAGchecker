@@ -45,6 +45,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessAudit.AuditAndComplia
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessAudit.ProjectManagement.Infrastructure", "src\Services\ProjectManagement\AccessAudit.ProjectManagement.Infrastructure\AccessAudit.ProjectManagement.Infrastructure.csproj", "{B7AA5DC5-BCB6-E960-3ACF-FC55CFDD08D9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "Elementy rozwiązania", "{A6BC28F2-BE99-4303-BAEF-DB72AC98F232}"
+	ProjectSection(SolutionItems) = preProject
+		Lab4.http = Lab4.http
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

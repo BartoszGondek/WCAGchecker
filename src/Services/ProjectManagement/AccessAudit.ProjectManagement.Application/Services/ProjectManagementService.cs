@@ -1,11 +1,12 @@
 using AccessAudit.ProjectManagement.Application.DTOs;
 using AccessAudit.ProjectManagement.Application.Repositories;
 using AccessAudit.ProjectManagement.Domain.Aggregates;
+using AccessAudit.ProjectManagement.Domain.Entities;
 using AccessAudit.ProjectManagement.Domain.Exceptions;
 
 namespace AccessAudit.ProjectManagement.Application.Services;
 
-public sealed class ProjectManagementService(IProjectRepository projects, IAuditScopeRepository scopes)
+public sealed class ProjectManagementService(IProjectRepository projects)
     : IProjectManagementService
 {
     public async Task<ProjectDto> RegisterWebsiteAsync(string? websiteUrl, CancellationToken cancellationToken = default)
@@ -34,25 +35,36 @@ public sealed class ProjectManagementService(IProjectRepository projects, IAudit
         IReadOnlyCollection<string>? screenshotReferences, CancellationToken cancellationToken = default)
     {
         var project = await RequireProjectAsync(projectId, cancellationToken);
-        var scope = new AuditScope(projectId, dom, screenshotReferences);
+
+        project.AddAuditScope(dom, screenshotReferences);
         project.ExtractDom();
-        await scopes.SaveAsync(scope, cancellationToken);
+
+      
         await projects.SaveAsync(project, cancellationToken);
-        return ToDto(scope);
+
+        var newScope = project.Scopes.Last();
+        return ToDto(newScope);
     }
 
     public async Task<AuditScopeDto?> GetScopeAsync(Guid projectId, Guid scopeId,
         CancellationToken cancellationToken = default)
     {
-        var scope = await scopes.GetByIdAsync(scopeId, cancellationToken);
-        return scope is null || scope.ProjectId != projectId ? null : ToDto(scope);
+     
+        var project = await projects.GetByIdAsync(projectId, cancellationToken);
+        if (project is null) return null;
+
+        var scope = project.Scopes.FirstOrDefault(s => s.Id == scopeId);
+        return scope is null ? null : ToDto(scope);
     }
 
     public async Task<InteractiveIssueDashboardDto> GetDashboardAsync(Guid projectId,
         CancellationToken cancellationToken = default)
     {
         var project = await RequireProjectAsync(projectId, cancellationToken);
-        var captures = await scopes.GetByProjectIdAsync(projectId, cancellationToken);
+
+      
+        var captures = project.Scopes;
+
         return new(ToDto(project), Array.AsReadOnly(captures.Select(ToDto).ToArray()));
     }
 

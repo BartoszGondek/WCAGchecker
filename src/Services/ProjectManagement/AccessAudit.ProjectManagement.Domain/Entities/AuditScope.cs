@@ -2,7 +2,7 @@ using AccessAudit.ProjectManagement.Domain.Events;
 using AccessAudit.ProjectManagement.Domain.Exceptions;
 using AccessAudit.ProjectManagement.Domain.ValueObjects;
 
-namespace AccessAudit.ProjectManagement.Domain.Aggregates;
+namespace AccessAudit.ProjectManagement.Domain.Entities;
 
 public sealed class AuditScope
 {
@@ -21,7 +21,7 @@ public sealed class AuditScope
 
     private AuditScope() { }
 
-    public AuditScope(Guid projectId, string? dom, IEnumerable<string>? screenshotReferences)
+    internal AuditScope(Guid projectId, string? dom, IEnumerable<string>? screenshotReferences)
     {
         if (projectId == Guid.Empty) throw new InvalidProjectIdException(projectId);
         if (string.IsNullOrWhiteSpace(dom)) throw new EmptyDomException(projectId);

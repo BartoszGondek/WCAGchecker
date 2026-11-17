@@ -1,4 +1,5 @@
 using AccessAudit.ProjectManagement.Domain.Aggregates;
+using AccessAudit.ProjectManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -20,15 +21,15 @@ internal sealed class ProjectManagementDataSeeder(ProjectManagementDbContext db,
 
         var ready = new Project("https://ready.example.com");
         ready.SelectAuditParameters("2.2");
-        var scope = new AuditScope(ready.Id, "<html lang=\"pl\"><body><h1>Demo</h1></body></html>", ["demo/home.png"]);
+        ready.AddAuditScope("<html lang=\"pl\"><body><h1>Demo</h1></body></html>", ["demo/home.png"]);
         ready.ExtractDom();
 
         var edge = new Project("https://registered.example.com");
         edge.SelectAuditParameters("2.1");
-        // Completing this Registered project immediately demonstrates the HTTP 422 rejection.
+
         await db.Projects.AddRangeAsync([ready, edge], cancellationToken);
-        await db.AuditScopes.AddAsync(scope, cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
+
         logger.LogInformation("Seeded 2 projects. ReadyProjectId: {ReadyProjectId}; EdgeProjectId: {EdgeProjectId}", ready.Id, edge.Id);
     }
 }

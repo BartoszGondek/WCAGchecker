@@ -1,5 +1,6 @@
 using AccessAudit.ProjectManagement.Domain.Aggregates;
 using AccessAudit.ProjectManagement.Domain.Exceptions;
+using AccessAudit.ProjectManagement.Domain.Entities;
 using AccessAudit.ProjectManagement.Domain.States;
 using AccessAudit.ProjectManagement.Domain.ValueObjects;
 
